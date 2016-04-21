@@ -19,7 +19,7 @@ def number_aware_tokenizer(doc):
               for token in tokens]
     return tokens
 
-print("Loading the 20 newsgroup Dataset")
+print("Loading the 20 newsgroup Dataset...")
 categories = ['alt.atheism', 'comp.graphics',
               'comp.sys.ibm.pc.hardware', 'comp.sys.mac.hardware',
               'comp.windows.x', 'misc.forsale', 'rec.autos',
@@ -29,7 +29,7 @@ categories = ['alt.atheism', 'comp.graphics',
               'talk.politics.guns', 'talk.politics.mideast',
               'talk.politics.misc', 'talk.religion.misc']
 newsgroups = fetch_20newsgroups(categories=categories)
-print("Vectorizing...")
+print("Vectorizing the dataset...")
 vectorizer = TfidfVectorizer(stop_words='english', min_df=5,tokenizer=number_aware_tokenizer)
 X = vectorizer.fit_transform(newsgroups.data)
 
@@ -77,7 +77,7 @@ def SpectralCoclustering(X,n_clusters, n_jobs, random_state,n_svd_vecs):
 	columns = np.vstack(column_labels == c for c in range(n_clusters))
 	return rows,columns,row_labels
 
-print("CoClustering")
+print("Performing the Spectral CoClustering algorithm...")
 cocluster= SpectralCoclustering(X,n_clusters=len(categories),n_jobs=1,random_state=0,n_svd_vecs=None)
 
 #Printing the data
@@ -101,7 +101,7 @@ def most_common(d):
 bicluster_ncuts = list(bicluster_ncut(i) for i in range(len(newsgroups.target_names)))
 best_idx = np.argsort(bicluster_ncuts)[:5]
 
-print("Best biclusters:")
+print("Displaying best coclusters:")
 
 for idx, cluster in enumerate(best_idx):
 	n_rows = X.shape[0]
